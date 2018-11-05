@@ -1,0 +1,23 @@
+{
+  "id": "963fec75-78d2-462e-8ddc-83b0c5b2f5c6",
+  "name": "DentalWarehouse.Integrations",
+  "publisher": "RIVERINE TECHNOLOGY SERVICES",
+  "brief": "Dental Warehouse Integrations for Bidvest, OrderLogistics, WooCommerce",
+  "description": "Dental Warehouse Integrations for Bidvest, OrderLogistics, WooCommerce",
+  "version": "1.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "logo.jpg",
+  "capabilities": [],
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "11.0.0.0",
+  "application": "11.0.0.0",
+  "idRange": {
+    "from": 53100,
+    "to": 53199
+  },
+  "runtime": "2.0"
+}
