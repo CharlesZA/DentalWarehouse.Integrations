@@ -34,9 +34,13 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
     var
         invoiceXML: XmlPort "DW.BIDVEST.InvoiceXML";
         salesInvHeader: Record "Sales Invoice Header";
+        integrationSetup: Record "DW.INTGR.Setup";
     begin
         /// Send invoice xml based on document number filter
+        integrationSetup.Get();
+        if integrationSetup.BIDVEST_ENABLED = false then exit;
         if documentNo = '' then exit;
+
         salesInvHeader.SetRange("No.", documentNo);
 
         invoiceXML.SetTableView(salesInvHeader);
@@ -46,8 +50,11 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
     var
         creditMemoXML: XmlPort "DW.BIDVEST.CreditMemoXML";
         salesCrMemoHeader: Record "Sales Cr.Memo Header";
+        integrationSetup: Record "DW.INTGR.Setup";
     begin
         /// Send credit memo xml based on document number filter
+        integrationSetup.Get();
+        if integrationSetup.BIDVEST_ENABLED = false then exit;
         if documentNo = '' then exit;
         salesCrMemoHeader.SetRange("No.", documentNo);
 
