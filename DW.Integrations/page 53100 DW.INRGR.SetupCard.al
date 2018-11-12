@@ -16,6 +16,14 @@ page 53100 "DW.INTGR.SetupCard"
                     ApplicationArea = All;
                 }
             }
+            group(BIDVEST)
+            {
+                field(BIDVEST_IP; BIDVEST_IP) { }
+                field(BIDVEST_PORT; BIDVEST_PORT) { }
+                field(BIDVEST_USER; BIDVEST_USER) { }
+                field(BIDVEST_PASSWORD; BIDVEST_PASSWORD) { }
+                field(BIDVEST_ENABLED; BIDVEST_ENABLED) { }
+            }
         }
     }
     actions
