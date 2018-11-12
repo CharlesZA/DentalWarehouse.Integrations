@@ -9,6 +9,8 @@ xmlport 53101 "DW.BIDVEST.InvoiceXML"
         {
             tableelement(SalesInvoiceHeader; "Sales Invoice Header")
             {
+                XmlName = 'SalesInvoiceHeader';
+
                 fieldelement(SelltoCustomerNo; SalesInvoiceHeader."Sell-to Customer No.") { }
                 fieldelement(No; SalesInvoiceHeader."No.") { }
                 fieldelement(BilltoCustomerNo; SalesInvoiceHeader."Bill-to Customer No.") { }
@@ -107,7 +109,7 @@ xmlport 53101 "DW.BIDVEST.InvoiceXML"
                 fieldelement(LastEmailSentStatus; SalesInvoiceHeader."Last Email Sent Status") { }
                 fieldelement(SentasEmail; SalesInvoiceHeader."Sent as Email") { }
                 fieldelement(LastEmailNotifCleared; SalesInvoiceHeader."Last Email Notif Cleared") { }
-                fieldelement(WorkDescription; SalesInvoiceHeader."Work Description") { }
+                // fieldelement(WorkDescription; SalesInvoiceHeader."Work Description") { }
                 fieldelement(DimensionSetID; SalesInvoiceHeader."Dimension Set ID") { }
                 fieldelement(PaymentServiceSetID; SalesInvoiceHeader."Payment Service Set ID") { }
                 fieldelement(DocumentExchangeIdentifier; SalesInvoiceHeader."Document Exchange Identifier") { }
@@ -135,6 +137,10 @@ xmlport 53101 "DW.BIDVEST.InvoiceXML"
                 {
                     tableelement(SalesInvoiceLine; "Sales Invoice Line")
                     {
+                        XmlName = 'SalesInvoiceLine';
+                        LinkTable = SalesInvoiceHeader;
+                        LinkFields = "Document No." = FIELD ("No.");
+
                         fieldelement(SelltoCustomerNo; SalesInvoiceLine."Sell-to Customer No.") { }
                         fieldelement(DocumentNo; SalesInvoiceLine."Document No.") { }
                         fieldelement(LineNo; SalesInvoiceLine."Line No.") { }

@@ -4,6 +4,7 @@ page 53100 "DW.INTGR.SetupCard"
     PageType = Card;
     SourceTable = "DW.INTGR.Setup";
     Caption = 'DW.INTGR.SetupCard';
+    UsageCategory = Administration;
 
     layout
     {
@@ -11,10 +12,10 @@ page 53100 "DW.INTGR.SetupCard"
         {
             group(General)
             {
-                field("PrimaryKey"; "PrimaryKey")
-                {
-                    ApplicationArea = All;
-                }
+                // field("PrimaryKey"; "PrimaryKey")
+                // {
+                //     ApplicationArea = All;
+                // }
             }
             group(BIDVEST)
             {
@@ -49,6 +50,22 @@ page 53100 "DW.INTGR.SetupCard"
                     Rec.Locked := false;
                     Modify(false);
                 end;
+            }
+            action(ExportInvoices)
+            {
+                Caption = 'Export Invoices for Bidvest';
+                trigger OnAction()
+                begin
+                    Xmlport.Run(53101, false, false);
+                end;
+            }
+            action(ExportCreditNotes)
+            {
+                Caption = 'Export Credit Memos for Bidvest';
+                trigger OnAction()
+                begin
+                    Xmlport.Run(53102, false, false);
+                End;
             }
         }
     }

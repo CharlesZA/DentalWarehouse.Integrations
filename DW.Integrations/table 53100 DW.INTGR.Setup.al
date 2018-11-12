@@ -47,7 +47,7 @@ table 53100 "DW.INTGR.Setup"
         BIDVEST_ENABLED := false;
 
 
-        Modify(false);
+        // Modify(false);
     end;
 
 

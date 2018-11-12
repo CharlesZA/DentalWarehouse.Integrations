@@ -14,12 +14,12 @@ codeunit 53100 "DW.INTGR.Install"
     var
         myAppInfo: ModuleInfo;
     begin
-        NavApp.GetCurrentModuleInfo(myAppInfo); // Get info about the currently executing module
+        // NavApp.GetCurrentModuleInfo(myAppInfo); // Get info about the currently executing module
 
-        if myAppInfo.DataVersion = Version.Create(0, 0, 0, 0) then // A 'DataVersion' of 0.0.0.0 indicates a 'fresh/new' install
-            HandleFreshInstall
-        else
-            HandleReinstall; // If not a fresh install, then we are Re-installing the same version of the extension
+        // if myAppInfo.DataVersion = Version.Create(0, 0, 0, 0) then // A 'DataVersion' of 0.0.0.0 indicates a 'fresh/new' install
+        //     HandleFreshInstall
+        // else
+        //     HandleReinstall; // If not a fresh install, then we are Re-installing the same version of the extension
     end;
 
     local procedure HandleFreshInstall();

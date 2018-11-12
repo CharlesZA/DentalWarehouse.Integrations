@@ -8,6 +8,8 @@ xmlport 53102 "DW.BIDVEST.CreditMemoXML"
         {
             tableelement(SalesCrMemoHeader; "Sales Cr.Memo Header")
             {
+                XmlName = 'SalesCrMemoHeader';
+
                 fieldelement(SelltoCustomerNo; SalesCrMemoHeader."Sell-to Customer No.") { }
                 fieldelement(No; SalesCrMemoHeader."No.") { }
                 fieldelement(BilltoCustomerNo; SalesCrMemoHeader."Bill-to Customer No.") { }
@@ -119,6 +121,10 @@ xmlport 53102 "DW.BIDVEST.CreditMemoXML"
                 {
                     tableelement(SalesCrMemoLine; "Sales Cr.Memo Line")
                     {
+                        XmlName = 'SalesCrMemoLine';
+                        LinkTable = SalesCrMemoHeader;
+                        LinkFields = "Document No." = field ("No.");
+
                         fieldelement(SelltoCustomerNo; SalesCrMemoLine."Sell-to Customer No.") { }
                         fieldelement(DocumentNo; SalesCrMemoLine."Document No.") { }
                         fieldelement(LineNo; SalesCrMemoLine."Line No.") { }
