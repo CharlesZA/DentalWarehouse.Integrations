@@ -62,7 +62,22 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
     end;
 
     procedure SendStatementXML(customerId: Code[20])
+    var
+        customerStatement: Report "Statement";
+        statementxml: OutStream;
+        statementinstream: InStream;
+        tofiletext: Text;
+        requestpagexml: Text;
     begin
         /// Send customer statement xml here....
+        //customerStatement.SaveAsXml();
+        requestpagexml := customerStatement.RunRequestPage();
+        clear(customerStatement);
+        customerStatement.SaveAs(requestpagexml, ReportFormat::Xml, statementxml);
+        CopyStream(statementxml, statementinstream);
+
+
+        tofiletext := 'statement.xml';
+        DownloadFromStream(statementinstream, '', 'C:\Users\Charles\Desktop\test', '', tofiletext);
     end;
 }

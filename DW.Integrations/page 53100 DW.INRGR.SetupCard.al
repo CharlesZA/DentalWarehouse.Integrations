@@ -25,6 +25,12 @@ page 53100 "DW.INTGR.SetupCard"
                 field(BIDVEST_PASSWORD; BIDVEST_PASSWORD) { }
                 field(BIDVEST_ENABLED; BIDVEST_ENABLED) { }
             }
+            group(ORDERLOGISTICS)
+            {
+                FIELD(ORDLOG_DEVURL; ORDLOG_DEVURL) { }
+                field(ORDLOG_LIVEURL; ORDLOG_LIVEURL) { }
+                field(ORDLOG_ENABLED; ORDLOG_ENABLED) { }
+            }
         }
     }
     actions
@@ -66,6 +72,16 @@ page 53100 "DW.INTGR.SetupCard"
                 begin
                     Xmlport.Run(53102, false, false);
                 End;
+            }
+            action(ExportStatementXML)
+            {
+                Caption = 'Export Statement XML';
+                trigger OnAction()
+                var
+                    bidvest: Codeunit "DW.BIDVEST.IntegrationMgt";
+                begin
+                    bidvest.SendStatementXML('');
+                end;
             }
         }
     }
