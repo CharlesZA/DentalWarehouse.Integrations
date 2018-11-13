@@ -30,6 +30,7 @@ page 53100 "DW.INTGR.SetupCard"
                 FIELD(ORDLOG_DEVURL; ORDLOG_DEVURL) { }
                 field(ORDLOG_LIVEURL; ORDLOG_LIVEURL) { }
                 field(ORDLOG_ENABLED; ORDLOG_ENABLED) { }
+                FIELD(ORDLOG_RESURL; ORDLOG_RESURL) { }
             }
         }
     }

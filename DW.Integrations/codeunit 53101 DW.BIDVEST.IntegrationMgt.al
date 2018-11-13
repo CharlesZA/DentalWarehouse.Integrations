@@ -76,7 +76,6 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         customerStatement.SaveAs(requestpagexml, ReportFormat::Xml, statementxml);
         CopyStream(statementxml, statementinstream);
 
-
         tofiletext := 'statement.xml';
         DownloadFromStream(statementinstream, '', 'C:\Users\Charles\Desktop\test', '', tofiletext);
     end;
