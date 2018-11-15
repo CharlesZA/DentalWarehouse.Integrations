@@ -87,6 +87,8 @@ page 53100 "DW.INTGR.SetupCard"
         }
     }
     trigger OnOpenPage();
+    var
+
     begin
         // Make sure there is a record, otherwise create it and set defaults.
         if Rec.get() = false then begin
