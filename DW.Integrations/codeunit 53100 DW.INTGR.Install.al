@@ -13,7 +13,9 @@ codeunit 53100 "DW.INTGR.Install"
     trigger OnInstallAppPerDatabase()
     var
         myAppInfo: ModuleInfo;
+
     begin
+
         // NavApp.GetCurrentModuleInfo(myAppInfo); // Get info about the currently executing module
 
         // if myAppInfo.DataVersion = Version.Create(0, 0, 0, 0) then // A 'DataVersion' of 0.0.0.0 indicates a 'fresh/new' install
