@@ -14,6 +14,7 @@ table 53100 "DW.INTGR.Setup"
         field(12; BIDVEST_USER; Text[50]) { }
         field(13; BIDVEST_PASSWORD; Text[50]) { }
         field(14; BIDVEST_ENABLED; Boolean) { }
+        field(15; BIDVEST_TEMPXMLPATH; TEXT[50]) { }
 
         /// Order Logistics
         field(20; ORDLOG_DEVURL; Text[50]) { }
@@ -62,6 +63,7 @@ table 53100 "DW.INTGR.Setup"
         BIDVEST_USER := 'DentalWH';
         BIDVEST_PASSWORD := 'VkZ38vpr9CUG';
         BIDVEST_ENABLED := false;
+        BIDVEST_TEMPXMLPATH := 'C:\Temp';
 
         /// Order Logistics
         ORDLOG_DEVURL := 'https://test.orderlogistics.co.za/rest/v1/';

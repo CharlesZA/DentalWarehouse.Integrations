@@ -35,6 +35,9 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         invoiceXML: XmlPort "DW.BIDVEST.InvoiceXML";
         salesInvHeader: Record "Sales Invoice Header";
         integrationSetup: Record "DW.INTGR.Setup";
+        txtINVID: Code[20];
+        processBlob: Record "DW.INTGR.ProcessBlob";
+        txtOutStream: OutStream;
     begin
         /// Send invoice xml based on document number filter
         integrationSetup.Get();
@@ -44,6 +47,24 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         salesInvHeader.SetRange("No.", documentNo);
 
         invoiceXML.SetTableView(salesInvHeader);
+
+        txtINVID := 'INVOICE';
+        IF processBlob.Get(txtINVID) then processBlob.Delete(FALSE);
+        processBlob.init;
+        processBlob.PrimaryKey := txtINVID;
+        processBlob.Insert(false);
+
+        processBlob.CalcFields(TempBlob);
+        processBlob.TempBlob.CreateOutStream(txtOutStream);
+        invoiceXML.SetDestination(txtOutStream);
+        invoiceXML.Export();
+        processBlob.Modify(FALSE);
+        processBlob.ExportToServerFile(integrationSetup.BIDVEST_TEMPXMLPATH + '\' + documentNo + '.xml', true);
+
+        processBlob.get(txtINVID);
+        processBlob.Delete(false);
+
+        /// add ftp function call here....
     end;
 
     procedure SendCreditMemoXML(documentNo: Code[20])
@@ -51,6 +72,9 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         creditMemoXML: XmlPort "DW.BIDVEST.CreditMemoXML";
         salesCrMemoHeader: Record "Sales Cr.Memo Header";
         integrationSetup: Record "DW.INTGR.Setup";
+        txtINVID: Code[20];
+        processBlob: Record "DW.INTGR.ProcessBlob";
+        txtOutStream: OutStream;
     begin
         /// Send credit memo xml based on document number filter
         integrationSetup.Get();
@@ -59,24 +83,62 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         salesCrMemoHeader.SetRange("No.", documentNo);
 
         creditMemoXML.SetTableView(salesCrMemoHeader);
+
+        txtINVID := 'CRMEMO';
+        IF processBlob.Get(txtINVID) then processBlob.Delete(FALSE);
+        processBlob.init;
+        processBlob.PrimaryKey := txtINVID;
+        processBlob.Insert(false);
+
+        processBlob.CalcFields(TempBlob);
+        processBlob.TempBlob.CreateOutStream(txtOutStream);
+        creditMemoXML.SetDestination(txtOutStream);
+        creditMemoXML.Export();
+        processBlob.Modify(FALSE);
+        processBlob.ExportToServerFile(integrationSetup.BIDVEST_TEMPXMLPATH + '\' + documentNo + '.xml', true);
+
+        processBlob.get(txtINVID);
+        processBlob.Delete(false);
+
+        /// add ftp function call here
     end;
 
     procedure SendStatementXML(customerId: Code[20])
     var
-        customerStatement: Report "Statement";
+        integrationSetup: Record "DW.INTGR.Setup";
+        customerStatement: Report 116;
         statementxml: OutStream;
-        statementinstream: InStream;
         tofiletext: Text;
         requestpagexml: Text;
+        processBlob: Record "DW.INTGR.ProcessBlob";
+        txtID: code[20];
     begin
+        integrationSetup.get;
+        if integrationSetup.BIDVEST_ENABLED = false then exit;
+
         /// Send customer statement xml here....
         //customerStatement.SaveAsXml();
         requestpagexml := customerStatement.RunRequestPage();
         clear(customerStatement);
-        customerStatement.SaveAs(requestpagexml, ReportFormat::Xml, statementxml);
-        CopyStream(statementxml, statementinstream);
 
         tofiletext := 'statement.xml';
-        DownloadFromStream(statementinstream, '', 'C:\Users\Charles\Desktop\test', '', tofiletext);
+
+        txtID := 'STATEMENT';
+        IF processBlob.Get(txtID) then processBlob.Delete(FALSE);
+        processBlob.init;
+        processBlob.PrimaryKey := txtID;
+        processBlob.Insert(false);
+
+        processBlob.CalcFields(TempBlob);
+        processBlob.TempBlob.CreateOutStream(statementxml);
+
+        customerStatement.SaveAs(requestpagexml, ReportFormat::Xml, statementxml);
+
+        processBlob.Modify(FALSE);
+        processBlob.ExportToServerFile(integrationSetup.BIDVEST_TEMPXMLPATH + '\' + 'statement' + '.xml', true);
+
+
+
+        //// add ftp function call here
     end;
 }
