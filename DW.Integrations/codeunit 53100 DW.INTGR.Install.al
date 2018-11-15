@@ -24,7 +24,7 @@ codeunit 53100 "DW.INTGR.Install"
 
     local procedure HandleFreshInstall();
     var
-        //integrationSetup:Record"NAC.IBMNAV.Setup";
+        integrationSetup: Record "DW.INTGR.Setup";
         sourceCode: Record "Source Code";
         sourceCodeSetup: Record "Source Code Setup";
         company: Record "Company";
@@ -39,22 +39,22 @@ codeunit 53100 "DW.INTGR.Install"
         if company.FindFirst() then begin
             repeat
 
-            // integrationSetup.ChangeCompany(company.Name);              
-            // integrationSetup.init;
-            // integrationSetup.SetupDefaults();
-            // integrationSetup.Insert(false);
+                integrationSetup.ChangeCompany(company.Name);
+                integrationSetup.init;
+                integrationSetup.SetupDefaults();
+                integrationSetup.Insert(false);
 
-            // sourceCode.ChangeCompany(company.Name);
-            // sourceCode.Init;
-            // sourceCode.Code := 'DW.INTGR';
-            // sourceCode.Description := 'DW.INTGR Transactions';
-            // if sourceCode.Insert(false) then begin end;
+                // sourceCode.ChangeCompany(company.Name);
+                // sourceCode.Init;
+                // sourceCode.Code := 'DW.INTGR';
+                // sourceCode.Description := 'DW.INTGR Transactions';
+                // if sourceCode.Insert(false) then begin end;
 
-            // sourceCodeSetup.ChangeCompany(company.Name);
-            // if sourceCodeSetup.get() then begin
-            //     sourceCodeSetup."DW.INTGR" := 'DW.INTGR';
-            //     sourceCodeSetup.Modify(false);
-            // end;
+                // sourceCodeSetup.ChangeCompany(company.Name);
+                // if sourceCodeSetup.get() then begin
+                //     sourceCodeSetup."DW.INTGR" := 'DW.INTGR';
+                //     sourceCodeSetup.Modify(false);
+                // end;
             until company.Next = 0;
         end;
     end;
