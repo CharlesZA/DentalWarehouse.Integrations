@@ -70,10 +70,10 @@ table 53100 "DW.INTGR.Setup"
         ORDLOG_ENABLED := false;
         ORDLOG_APPID := '';
         ORDLOG_COMPANY := '';
-        ORDLOG_USERNAME := '';
-        ORDLOG_PASSWORD := '';
-        ORDLOG_SITENO := '';
-        ORDLOG_SITEPASSWORD := '';
+        ORDLOG_USERNAME := 'DENTWHINTEG@TESTOW.CO.ZA';
+        ORDLOG_PASSWORD := ']WBZwu02zzjWJ3h';
+        ORDLOG_SITENO := 'DENTWH';
+        ORDLOG_SITEPASSWORD := '2429226242';
         ORDLOG_SITETOKENURL := 'https://www.orderlogistics.co.za/rest/v1/siteauth';
 
         // Modify(false);
