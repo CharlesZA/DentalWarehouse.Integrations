@@ -64,16 +64,21 @@ page 53100 "DW.INTGR.SetupCard"
             {
                 Caption = 'Export Invoices for Bidvest';
                 trigger OnAction()
+                var
+                    bidvest: Codeunit "DW.BIDVEST.IntegrationMgt";
                 begin
-                    Xmlport.Run(53101, false, false);
+                    bidvest.SendInvoiceXML('103015');
                 end;
             }
             action(ExportCreditNotes)
             {
                 Caption = 'Export Credit Memos for Bidvest';
                 trigger OnAction()
+                var
+                    bidvest: Codeunit "DW.BIDVEST.IntegrationMgt";
                 begin
-                    Xmlport.Run(53102, false, false);
+                    bidvest.SendCreditMemoXML('104002');
+                    ;
                 End;
             }
             action(ExportStatementXML)
