@@ -29,10 +29,17 @@ page 53100 "DW.INTGR.SetupCard"
             }
             group(ORDERLOGISTICS)
             {
-                FIELD(ORDLOG_DEVURL; ORDLOG_DEVURL) { }
-                field(ORDLOG_LIVEURL; ORDLOG_LIVEURL) { }
+                field(ORDLOG_APPID; ORDLOG_APPID) { }
+                field(ORDLOG_COMPANY; ORDLOG_COMPANY) { }
+                field(ORDLOG_DEVURL; ORDLOG_DEVURL) { }
                 field(ORDLOG_ENABLED; ORDLOG_ENABLED) { }
-                FIELD(ORDLOG_RESURL; ORDLOG_RESURL) { }
+                field(ORDLOG_LIVEURL; ORDLOG_LIVEURL) { }
+                field(ORDLOG_PASSWORD; ORDLOG_PASSWORD) { }
+                field(ORDLOG_RESURL; ORDLOG_RESURL) { }
+                field(ORDLOG_SITENO; ORDLOG_SITENO) { }
+                field(ORDLOG_SITEPASSWORD; ORDLOG_SITEPASSWORD) { }
+                field(ORDLOG_SITETOKENURL; ORDLOG_SITETOKENURL) { }
+                field(ORDLOG_USERNAME; ORDLOG_USERNAME) { }
             }
         }
     }
@@ -91,6 +98,27 @@ page 53100 "DW.INTGR.SetupCard"
                     bidvest.SendStatementXML('');
                 end;
             }
+            action(ORDLOG_TESTUSERAUTH)
+            {
+                Caption = 'Order Logistics - Test User Token';
+                trigger OnAction()
+                var
+                    orderlogistics: Codeunit "DW.ORDERWISE.IntegrationMgt";
+                begin
+                    orderlogistics.TEST_UserAuth();
+                end;
+            }
+            action(ORDLOG_TESTSITEAUTH)
+            {
+                Caption = 'Order Logistics - Test Site Token';
+                trigger OnAction()
+                var
+                    orderlogistics: Codeunit "DW.ORDERWISE.IntegrationMgt";
+                begin
+                    orderlogistics.TEST_SiteAuth();
+                end;
+            }
+
         }
     }
     trigger OnOpenPage();

@@ -15,7 +15,7 @@ table 53100 "DW.INTGR.Setup"
         field(13; BIDVEST_PASSWORD; Text[50]) { }
         field(14; BIDVEST_ENABLED; Boolean) { }
         field(15; BIDVEST_TEMPXMLPATH; TEXT[50]) { }
-        field(16; BIDVEST_SSHFINGER; TEXT[50]) { }
+        field(16; BIDVEST_SSHFINGER; TEXT[150]) { }
 
         /// Order Logistics
         field(20; ORDLOG_DEVURL; Text[50]) { }

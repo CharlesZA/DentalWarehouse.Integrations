@@ -16,6 +16,19 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         Code();
     end;
 
+    procedure TEST_UserAuth()
+    begin
+        GetUserAuthToken();
+        Message(userAuthToken);
+    end;
+
+    procedure TEST_SiteAuth()
+    begin
+        GetUserAuthToken();
+        GetSiteAuthToken();
+        message(siteAuthToken);
+    end;
+
     local procedure Code()
     var
     begin
