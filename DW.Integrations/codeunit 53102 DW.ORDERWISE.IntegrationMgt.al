@@ -90,7 +90,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
                 if jsonObject.Get('id', jsonToken) then begin
                     orderID := jsonToken.AsValue().AsText();
                     SendOrderConfirmation(orderID);
-                    SendOrderConfirmationResults(orderID);
+                    SendOrderConfirmationResults(orderID, GetJsonToken(jsonOrder, 'orderNo').AsValue().AsCode());
                     // Register push notification here... This is not defined yet in documentation...
                 end;
             end;
@@ -100,7 +100,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
     end;
 
     // send results of order confirmation
-    local procedure SendOrderConfirmationResults(id: Text)
+    local procedure SendOrderConfirmationResults(id: Text; salesOrderNo: code[20])
     var
         salesHeader: Record "Sales Header";
         salesLine: Record "Sales Line";
@@ -110,12 +110,42 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         httpContent: HttpContent;
         httpHeaders: HttpHeaders;
         jsonPayLoad: JsonObject;
+        jsonItems: JsonArray;
+        jsonItem: JsonObject;
+        jsonBackOrder: JsonObject;
         payLoad: Text;
     begin
         integrationSetup.get();
 
         /// Create payload
+
+        //Header payload
+        salesHeader.get(salesHeader."Document Type"::Order, salesOrderNo);
         jsonPayLoad.Add('SupplierRef', '0000000');  /// Can add further reference info here...
+
+        //Lines payload
+        salesLine.setrange("Document Type", salesLine."Document Type"::Order);
+        salesLine.SetRange("Document No.", salesHeader."No.");
+        if salesLine.IsEmpty() = false then begin
+            salesLine.FindSet();
+            repeat
+                jsonItem.Add('ProductCode', salesLine."No.");
+                jsonItem.Add('DeliveryQty', salesLine.Quantity);
+                jsonItem.Add('ExpectedDeliveryDate', salesLine."Shipment Date");
+                jsonItem.Add('AlternateDeliveryBranchCode', '');
+                jsonItem.Add('InvoiceNo', '');
+                jsonItem.Add('SupplyReasonCode', 'OK$');
+
+                jsonBackOrder.Add('BackOrderQty', 0);
+                jsonBackOrder.Add('ExpectedDeliveryDate', salesLine."Shipment Date");
+                jsonItem.Add('BackOrder', jsonBackOrder);
+
+                jsonItems.Add(jsonItem);
+            Until salesLine.next = 0;
+            jsonPayLoad.Add('items', jsonItems);
+        end;
+
+
         jsonPayLoad.WriteTo(payLoad);
 
         httpContent.WriteFrom(payLoad);
@@ -130,15 +160,19 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         httpRequestMessage.Content := httpContent;
 
         if integrationSetup.ORDLOG_ENABLED then begin
-            httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_LIVEURL + '/orders/' + id + '/confirm');
+            httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_LIVEURL + '/orders/' + id + '/results');
         end
         else begin
-            httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_DEVURL + '/orders/' + id + '/confirm');
+            httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_DEVURL + '/orders/' + id + '/results');
         end;
 
         httpRequestMessage.Method('POST');
 
         httpClient.Send(httpRequestMessage, httpResponseMessage);
+
+
+        //// handle response messages back......Doesn't make sense
+
 
     end;
     // Confirms that an order was receieved back to order logistics.
