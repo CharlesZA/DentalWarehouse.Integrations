@@ -15,6 +15,7 @@ table 53100 "DW.INTGR.Setup"
         field(13; BIDVEST_PASSWORD; Text[50]) { }
         field(14; BIDVEST_ENABLED; Boolean) { }
         field(15; BIDVEST_TEMPXMLPATH; TEXT[50]) { }
+        field(16; BIDVEST_SSHFINGER; TEXT[50]) { }
 
         /// Order Logistics
         field(20; ORDLOG_DEVURL; Text[50]) { }
@@ -64,6 +65,7 @@ table 53100 "DW.INTGR.Setup"
         BIDVEST_PASSWORD := 'VkZ38vpr9CUG';
         BIDVEST_ENABLED := false;
         BIDVEST_TEMPXMLPATH := 'C:\Temp';
+        BIDVEST_SSHFINGER := 'ssh-dss 1024 Pqt2eKxXQy2PGJYyBeLAAeD4kq/dIIbTowj3bFPyqBo=';
 
         /// Order Logistics
         ORDLOG_DEVURL := 'https://test.orderlogistics.co.za/rest/v1/';

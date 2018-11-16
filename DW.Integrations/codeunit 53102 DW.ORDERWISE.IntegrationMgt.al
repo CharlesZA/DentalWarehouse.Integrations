@@ -102,7 +102,43 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
     // send results of order confirmation
     local procedure SendOrderConfirmationResults(id: Text)
     var
+        salesHeader: Record "Sales Header";
+        salesLine: Record "Sales Line";
+        httpClient: HttpClient;
+        httpRequestMessage: HttpRequestMessage;
+        httpResponseMessage: HttpResponseMessage;
+        httpContent: HttpContent;
+        httpHeaders: HttpHeaders;
+        jsonPayLoad: JsonObject;
+        payLoad: Text;
     begin
+        integrationSetup.get();
+
+        /// Create payload
+        jsonPayLoad.Add('SupplierRef', '0000000');  /// Can add further reference info here...
+        jsonPayLoad.WriteTo(payLoad);
+
+        httpContent.WriteFrom(payLoad);
+
+        /// Retrieve Headers
+        httpContent.GetHeaders(httpHeaders);
+        httpHeaders.Clear();
+        httpHeaders.Add('Auth-Token', userAuthToken);
+        httpHeaders.Add('Site-Token', siteAuthToken);
+        httpHeaders.Add('Content-Type', 'application/json');
+
+        httpRequestMessage.Content := httpContent;
+
+        if integrationSetup.ORDLOG_ENABLED then begin
+            httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_LIVEURL + '/orders/' + id + '/confirm');
+        end
+        else begin
+            httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_DEVURL + '/orders/' + id + '/confirm');
+        end;
+
+        httpRequestMessage.Method('POST');
+
+        httpClient.Send(httpRequestMessage, httpResponseMessage);
 
     end;
     // Confirms that an order was receieved back to order logistics.
@@ -149,10 +185,75 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
     // creates the actual NAV order...
     local procedure CreateNAVOrder(jOrder: JsonObject)
     var
+        salesHeader: Record "Sales Header";
+        salesLine: Record "Sales Line";
+        jsonToken: JsonToken;
+        jsonObject: JsonObject;
+        jsonValue: JsonValue;
+        jLines: JsonArray;
+        jLine: JsonObject;
+        iCounter: Integer;
     begin
+
+        /// Sales header
+        salesHeader.init;
+        salesHeader."Document Type" := salesHeader."Document Type"::Order;
+        salesHeader."No." := GetJsonToken(jOrder, 'orderNo').AsValue().AsText();
+        salesHeader.Insert();
+
+        salesHeader.SetHideValidationDialog(true);
+
+        salesHeader.Validate("Sell-to Customer No.", GetJsonToken(jOrder, 'accountNo').AsValue().AsText());
+        salesHeader.Validate("Document Date", GetJsonToken(jOrder, 'orderTimestamp').AsValue().AsDate());
+        salesHeader.Validate("Your Reference", GetJsonToken(jOrder, 'customerRef').AsValue().AsText());
+
+        /// NOTES: NEED SOMEWHERE TO ADD THE ID TO THE SALES DOCUMENT
+        /// salesHeader.Validate("ORDERWISE ID",GetJsonToken(jOrder, 'id').AsValue().AsText());
+
+        salesHeader.Modify();
+
+
+        /// Lines
+        jLines := GetJsonToken(jOrder, 'items').AsArray();
+        for iCounter := 0 to jLines.Count() do begin
+            jLines.get(iCounter, jsonToken);
+            jLine := jsonToken.AsObject();
+
+            salesLine.init;
+            salesLine."Document Type" := salesHeader."Document Type";
+            salesLine."Document No." := salesHeader."No.";
+            salesLine."Line No." := iCounter;
+            salesLine.Insert();
+
+            salesLine.SetHideValidationDialog(true);
+
+            salesLine.validate(Type, salesLine.Type::Item);
+            salesLine.validate("No.", GetJsonToken(jLine, 'productCode').AsValue().AsText());
+            salesLine.Validate(Quantity, GetJsonToken(jLine, 'orderQty').AsValue().AsDecimal());
+            salesLine.Validate("Unit Price", GetJsonToken(jLine, 'unitPrice').AsValue().AsDecimal());
+
+            salesLine.Modify();
+        end;
+    end;
+
+    // Easier way of calling json fields
+    procedure GetJsonToken(JsonObject: JsonObject; TokenKey: text) JsonToken: JsonToken;
+    begin
+
+        if not JsonObject.Get(TokenKey, JsonToken) then
+
+            Error('Could not find a token with key %1', TokenKey);
 
     end;
 
+    procedure SelectJsonToken(JsonObject: JsonObject; Path: text) JsonToken: JsonToken;
+    begin
+
+        if not JsonObject.SelectToken(Path, JsonToken) then
+
+            Error('Could not find a token with path %1', Path);
+
+    end;
 
     local procedure GetSupplierID()
     var
@@ -185,12 +286,15 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         httpClient.Send(httpRequestMessage, httpResponseMessage);
 
         httpResponseMessage.Content().ReadAs(responseContent);
+
         jsonToken.ReadFrom(responseContent);
         jsonToken.AsArray().Get(0, jsonToken);
         jsonObject := jsonToken.AsObject();
 
-        jsonObject.get('id', jsonToken);
-        supplierID := jsonToken.AsValue().AsText();
+        if jsonObject.get('id', jsonToken) then begin
+            supplierID := jsonToken.AsValue().AsText();
+        end;
+
     end;
 
     local procedure GetUserAuthToken()

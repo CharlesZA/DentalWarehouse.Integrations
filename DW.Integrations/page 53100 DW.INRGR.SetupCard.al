@@ -25,6 +25,7 @@ page 53100 "DW.INTGR.SetupCard"
                 field(BIDVEST_PASSWORD; BIDVEST_PASSWORD) { }
                 field(BIDVEST_ENABLED; BIDVEST_ENABLED) { }
                 field(BIDVEST_TEMPXMLPATH; BIDVEST_TEMPXMLPATH) { }
+                FIELD(BIDVEST_SSHFINGER; BIDVEST_SSHFINGER) { }
             }
             group(ORDERLOGISTICS)
             {

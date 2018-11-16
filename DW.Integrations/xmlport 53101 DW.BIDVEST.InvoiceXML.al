@@ -131,7 +131,6 @@ xmlport 53101 "DW.BIDVEST.InvoiceXML"
                 fieldelement(AllowLineDisc; SalesInvoiceHeader."Allow Line Disc.") { }
                 fieldelement(GetShipmentUsed; SalesInvoiceHeader."Get Shipment Used") { }
                 fieldelement(Id; SalesInvoiceHeader."Id") { }
-
                 /// Lines
                 textelement(SalesInvoiceLines)
                 {
