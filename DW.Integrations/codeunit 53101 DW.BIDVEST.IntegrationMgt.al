@@ -38,6 +38,8 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         txtINVID: Code[20];
         processBlob: Record "DW.INTGR.ProcessBlob";
         txtOutStream: OutStream;
+        sftpintegration: Codeunit "SFTP Outbound Integration";
+
     begin
         /// Send invoice xml based on document number filter
         integrationSetup.Get();
@@ -65,6 +67,10 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         processBlob.Delete(false);
 
         /// add ftp function call here....
+        sftpintegration.SFTPSENDFILE(integrationSetup.BIDVEST_IP, integrationSetup.BIDVEST_USER,
+                                     integrationSetup.BIDVEST_PASSWORD, integrationSetup.BIDVEST_SSHFINGER,
+                                     integrationSetup.BIDVEST_TEMPXMLPATH + '\' + documentNo + '.xml',
+                                     '/Invoices/');
     end;
 
     procedure SendCreditMemoXML(documentNo: Code[20])
@@ -75,6 +81,8 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         txtINVID: Code[20];
         processBlob: Record "DW.INTGR.ProcessBlob";
         txtOutStream: OutStream;
+        sftpintegration: Codeunit "SFTP Outbound Integration";
+
     begin
         /// Send credit memo xml based on document number filter
         integrationSetup.Get();
@@ -100,7 +108,13 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         processBlob.get(txtINVID);
         processBlob.Delete(false);
 
-        /// add ftp function call here
+        // add ftp function call here
+        sftpintegration.SFTPSENDFILE(integrationSetup.BIDVEST_IP, integrationSetup.BIDVEST_USER,
+                                     integrationSetup.BIDVEST_PASSWORD, integrationSetup.BIDVEST_SSHFINGER,
+                                     integrationSetup.BIDVEST_TEMPXMLPATH + '\' + documentNo + '.xml',
+                                     '/CreditNote/');
+
+
     end;
 
     procedure SendStatementXML(customerId: Code[20])
@@ -112,6 +126,7 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
         requestpagexml: Text;
         processBlob: Record "DW.INTGR.ProcessBlob";
         txtID: code[20];
+        sftpintegration: Codeunit "SFTP Outbound Integration";
     begin
         integrationSetup.get;
         if integrationSetup.BIDVEST_ENABLED = false then exit;
@@ -140,5 +155,10 @@ codeunit 53101 "DW.BIDVEST.IntegrationMgt"
 
 
         //// add ftp function call here
+        sftpintegration.SFTPSENDFILE(integrationSetup.BIDVEST_IP, integrationSetup.BIDVEST_USER,
+                                     integrationSetup.BIDVEST_PASSWORD, integrationSetup.BIDVEST_SSHFINGER,
+                                     integrationSetup.BIDVEST_TEMPXMLPATH + '\' + 'statement' + '.xml',
+                                     '/Statement/');
+
     end;
 }
