@@ -72,8 +72,8 @@ table 53100 "DW.INTGR.Setup"
         ORDLOG_LIVEURL := 'https://www.orderlogistics.co.za/rest/v1/';
         ORDLOG_RESURL := 'https://www.orderlogistics.co.za/rest/v1/auth';
         ORDLOG_ENABLED := false;
-        ORDLOG_APPID := '';
-        ORDLOG_COMPANY := '';
+        ORDLOG_APPID := 'MS DYNAMICS NAV 2018';
+        ORDLOG_COMPANY := 'The Dental Warehouse';
         ORDLOG_USERNAME := 'DENTWHINTEG@TESTOW.CO.ZA';
         ORDLOG_PASSWORD := ']WBZwu02zzjWJ3h';
         ORDLOG_SITENO := 'DENTWH';
