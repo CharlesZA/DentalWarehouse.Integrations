@@ -360,7 +360,8 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_USERNAME) + '-' + integrationSetup.ORDLOG_PASSWORD, 0);
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
-
+        Message(passwordHASH);
+        
         /// Create payload
         jsonPayLoad.Add('UserName', integrationSetup.ORDLOG_USERNAME);
         jsonPayLoad.Add('PassHash', passwordHASH);
