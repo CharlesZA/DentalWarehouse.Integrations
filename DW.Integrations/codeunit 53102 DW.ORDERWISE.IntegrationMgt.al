@@ -358,7 +358,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         integrationSetup.get();
 
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_USERNAME) + '-' + integrationSetup.ORDLOG_PASSWORD, 0);
-
+        Message(passwordHASH);
         /// Create payload
         jsonPayLoad.Add('UserName', integrationSetup.ORDLOG_USERNAME);
         jsonPayLoad.Add('PassHash', passwordHASH);
