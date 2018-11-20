@@ -401,7 +401,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         payLoad: Text;
     begin
         integrationSetup.get();
-
+        Clear(encriptionManagement);
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_SITENO) + '-' + integrationSetup.ORDLOG_SITEPASSWORD, 0);
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
         clear(jsonPayLoad);                     // << VOX1.10 PS >>
