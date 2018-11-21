@@ -401,7 +401,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         payLoad: Text;
     begin
         integrationSetup.get();
-    
+       
         
         Clear(encriptionManagement);            // << VOX1.10 PS >>
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_SITENO) + '-' + integrationSetup.ORDLOG_SITEPASSWORD, 0);
@@ -418,7 +418,6 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         httpContent.GetHeaders(httpHeaders);
         httpHeaders.Clear();
         httpHeaders.Add('Auth-Token', userAuthToken);
-        Message( userAuthToken);
         httpHeaders.Add('Content-Type', 'application/json');
 
         httpRequestMessage.Content := httpContent;
