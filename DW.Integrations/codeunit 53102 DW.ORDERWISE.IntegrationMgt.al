@@ -408,8 +408,8 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
         
         /// Create payload
-        jsonPayLoad.Add('Auth-Token', userAuthToken);        // << TEMP
-        jsonPayLoad.Add('Content-Type', 'application/json');  // << TEMP
+        jsonPayLoad.Add('Auth-Token', userAuthToken);          // << TEMP
+        jsonPayLoad.Add('Content-Type', 'application/json');   // << TEMP
         jsonPayLoad.Add('SiteNo', integrationSetup.ORDLOG_SITENO);
         jsonPayLoad.Add('PassHash', passwordHASH);
         jsonPayLoad.WriteTo(payLoad);
