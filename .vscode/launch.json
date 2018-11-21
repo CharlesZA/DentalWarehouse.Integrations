@@ -10,7 +10,7 @@
             "serverInstance": "DynamicsNAV110",
             "authentication": "Windows",
             "startupObjectId": 22,
-            "schemaUpdateMode": "Recreate",
+            "schemaUpdateMode": "Synchronize",
             "port": 7049
         }
     ]
