@@ -417,7 +417,8 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         /// Retrieve Headers
         httpContent.GetHeaders(httpHeaders);
         httpHeaders.Clear();
-        httpHeaders.Add('Auth-Token', lowercase(userAuthToken));
+        httpHeaders.Add('Auth-Token', userAuthToken);
+        Message( userAuthToken);
         httpHeaders.Add('Content-Type', 'application/json');
 
         httpRequestMessage.Content := httpContent;
