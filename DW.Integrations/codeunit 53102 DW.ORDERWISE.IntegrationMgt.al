@@ -401,24 +401,11 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         payLoad: Text;
     begin
         integrationSetup.get();
-        // << TEMP
-        passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_USERNAME) + '-' + integrationSetup.ORDLOG_PASSWORD, 0);
-        passwordHASH :=LowerCase(passwordHASH);
-                    
-        
-        /// Create payload
-        jsonPayLoad.Add('UserName', integrationSetup.ORDLOG_USERNAME);
-        jsonPayLoad.Add('PassHash', passwordHASH);
-        jsonPayLoad.Add('ApplicationName', integrationSetup.ORDLOG_APPID);
-        jsonPayLoad.Add('CompanyName', integrationSetup.ORDLOG_COMPANY);
-        // >> Temp
+    
         
         Clear(encriptionManagement);            // << VOX1.10 PS >>
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_SITENO) + '-' + integrationSetup.ORDLOG_SITEPASSWORD, 0);
-       
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
-        
-                        // << VOX1.10 PS >>
         
         /// Create payload
         jsonPayLoad.Add('SiteNo', integrationSetup.ORDLOG_SITENO);
