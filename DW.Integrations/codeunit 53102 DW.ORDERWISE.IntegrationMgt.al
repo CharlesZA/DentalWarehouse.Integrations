@@ -403,8 +403,9 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         integrationSetup.get();
         Clear(encriptionManagement);            // << VOX1.10 PS >>
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_SITENO) + '-' + integrationSetup.ORDLOG_SITEPASSWORD, 0);
-        //message()
+        message(LowerCase(integrationSetup.ORDLOG_SITENO) + '-' + integrationSetup.ORDLOG_SITEPASSWORD);
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
+        Message(passwordHASH);
         clear(jsonPayLoad);                     // << VOX1.10 PS >>
         
         /// Create payload
