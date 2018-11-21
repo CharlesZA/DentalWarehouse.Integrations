@@ -408,8 +408,6 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
         
         /// Create payload
-        jsonPayLoad.Add('Auth-Token', userAuthToken);          // << TEMP
-        jsonPayLoad.Add('Content-Type', 'application/json');   // << TEMP
         jsonPayLoad.Add('SiteNo', integrationSetup.ORDLOG_SITENO);
         jsonPayLoad.Add('PassHash', passwordHASH);
         jsonPayLoad.WriteTo(payLoad);
@@ -419,7 +417,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         /// Retrieve Headers
         httpContent.GetHeaders(httpHeaders);
         httpHeaders.Clear();
-        httpHeaders.Add('Auth-Token', userAuthToken);
+        httpHeaders.Add('Auth-Token', lowercase(userAuthToken);
         httpHeaders.Add('Content-Type', 'application/json');
 
         httpRequestMessage.Content := httpContent;
