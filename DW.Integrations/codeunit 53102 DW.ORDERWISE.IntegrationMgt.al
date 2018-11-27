@@ -10,7 +10,8 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         userAuthToken: Text;
         siteAuthToken: Text;
         supplierID: Text;
-
+        JSONTOKEN2 :JsonToken;
+        
     trigger OnRun()
     begin
         Code();
@@ -20,6 +21,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
     begin
         GetUserAuthToken();
         Message(userAuthToken);
+
     end;
 
     procedure TEST_SiteAuth()
@@ -360,7 +362,7 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_USERNAME) + '-' + integrationSetup.ORDLOG_PASSWORD, 0);
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
-        clear(jsonPayLoad);                     // << VOX1.10 PS >>
+     
         
         /// Create payload
         jsonPayLoad.Add('UserName', integrationSetup.ORDLOG_USERNAME);
@@ -374,19 +376,18 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         /// Retrieve Headers
         httpContent.GetHeaders(httpHeaders);
         httpHeaders.Clear();
-        httpHeaders.Add('Content-Type', 'application/json');
+        httpHeaders.Add('Content-Type', 'application/json; charset=utf-8');
 
+        
         httpRequestMessage.Content := httpContent;
         httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_RESURL);
         httpRequestMessage.Method('POST');
 
         httpClient.Send(httpRequestMessage, httpResponseMessage);
-
         httpResponseMessage.Content().ReadAs(userAuthToken);
-
-
+        HttpClient.DefaultRequestHeaders.Add('Auth-Token',userAuthToken);
+        cleantoken(userAuthToken);// << VOX1.10 PS >>
     end;
-
 
     /// This proceedure gets a new token for further api calls
     local procedure GetSiteAuthToken()
@@ -399,35 +400,43 @@ codeunit 53102 "DW.ORDERWISE.IntegrationMgt"
         passwordHASH: Text;
         jsonPayLoad: JsonObject;
         payLoad: Text;
-    begin
-        integrationSetup.get();
-       
         
-        Clear(encriptionManagement);            // << VOX1.10 PS >>
+        
+    begin
+        
+        integrationSetup.get();
         passwordHASH := encriptionManagement.GenerateHash(LowerCase(integrationSetup.ORDLOG_SITENO) + '-' + integrationSetup.ORDLOG_SITEPASSWORD, 0);
         passwordHASH :=LowerCase(passwordHASH); // << VOX1.10 PS >>
-        
+       
         /// Create payload
         jsonPayLoad.Add('SiteNo', integrationSetup.ORDLOG_SITENO);
         jsonPayLoad.Add('PassHash', passwordHASH);
         jsonPayLoad.WriteTo(payLoad);
 
         httpContent.WriteFrom(payLoad);
-
         /// Retrieve Headers
+      
         httpContent.GetHeaders(httpHeaders);
         httpHeaders.Clear();
-        httpHeaders.Add('Auth-Token', userAuthToken);
-        httpHeaders.Add('Content-Type', 'application/json');
-
+        httpHeaders.Add('Auth-Token',userAuthToken);
+        httpHeaders.Add('Content-Type', 'application/json; charset=utf-8');
         httpRequestMessage.Content := httpContent;
         httpRequestMessage.SetRequestUri(integrationSetup.ORDLOG_SITETOKENURL);
         httpRequestMessage.Method('POST');
-
         httpClient.Send(httpRequestMessage, httpResponseMessage);
-
         httpResponseMessage.Content().ReadAs(siteAuthToken);
-
-
+        cleantoken(siteAuthToken); // << VOX1.10 PS >>
     end;
+
+    local procedure cleantoken(var Ptoken:Text)
+     var
+       ptext:text;
+        
+    begin
+      // << VOX1.10 PS
+      ptext := '"';
+      Ptoken := DelChr(Ptoken,'=',ptext);
+      // >> VOX1.10 PS
+    end;
+    
 }
