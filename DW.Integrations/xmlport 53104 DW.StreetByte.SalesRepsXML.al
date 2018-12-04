@@ -1,5 +1,6 @@
 
-xmlport 53104 "DW.BIDVEST.SalesRepsXML"
+xmlport 53104 "DW.StreetByte.SalesRepsXML"
+// << VOX1.14 PS >>
 {
    Format = VariableText;
    FieldSeparator='|';

@@ -136,13 +136,60 @@ page 53100 "DW.INTGR.SetupCard"
             // StreetByte Integration Fields 
             action(StreetByte_SendSalesReps)
             {
-                Caption = 'StreetByte_SendSalesReps';
+                Caption = 'Send Sales Reps to StreetByte';
                 trigger OnAction()
                 var
                     StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
                 begin
                    clear(StreetByte);
                     StreetByte.SendSalesReps;
+                end;
+            }
+            action(StreetByte_SendCustomers)
+            {
+                Caption = 'Send Customers to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendCustomers;
+                end;
+            }
+            
+            action(StreetByte_SendItemCats)
+            {
+                Caption = 'Send Product Groups to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendProdCat;
+                end;
+            }
+
+            action(StreetByte_SendSuppliers)
+            {
+                Caption = 'Send Suppliers to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendSupplier;
+                end;
+            }
+
+             action(StreetByte_SendGeoAreas)
+            {
+                Caption = 'Send Geographic Areas to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendGeoAreas;
                 end;
             }
             // >> VOX1.14 PS 
