@@ -30,14 +30,23 @@ table 53100 "DW.INTGR.Setup"
         FIELD(29; ORDLOG_SITEPASSWORD; Text[50]) { }
         FIELD(30; ORDLOG_SITETOKENURL; Text[50]) { }
 
-
-
-
-
         field(200; Locked; Boolean)
         {
             Caption = 'Locked';
         }
+        // << VOX1.14 PS 
+        // StreetByte fields
+        field(50000; StreetByte_Address; Text[150]) { }
+        field(50001; StreetByte_Port; Text[50]) { }
+        field(50002; StreetByte_User; Text[50]) { }
+        field(50003; StreetByte_Password; Text[50]) { }
+        field(50004; StreetByte_Enabled; Boolean) { }
+        field(50005; StreetByte_FilePath; TEXT[50]) { }
+        field(50006; StreetByte_SSHFINGER; TEXT[150]) { }
+        // >> VOX1.14 PS 
+
+
+
     }
 
     keys
@@ -81,6 +90,16 @@ table 53100 "DW.INTGR.Setup"
         ORDLOG_SITETOKENURL := 'https://www.orderlogistics.co.za/rest/v1/siteauth';
 
         // Modify(false);
+        // << VOX1.14 PS 
+        // StreetByte fields
+        StreetByte_Address   := 'https://dw.kusasa.biz/';
+        StreetByte_Port      := '443';
+        StreetByte_User      := 'Preshan';
+        StreetByte_Password  := 'This is a strong password';
+        StreetByte_Enabled   :=  False;
+        StreetByte_FilePath  := 'C:\Temp2';
+        StreetByte_SSHFINGER := '69:48:fc:a8:0b:54:0e:21:df:20:2c:e5:d0:d1:1d:9f:18:67:1f:9f';
+        // >> VOX1.14 PS 
     end;
 
 

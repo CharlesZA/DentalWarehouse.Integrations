@@ -5,7 +5,7 @@ page 53100 "DW.INTGR.SetupCard"
     SourceTable = "DW.INTGR.Setup";
     Caption = 'DW.INTGR.SetupCard';
     UsageCategory = Administration;
-
+   
     layout
     {
         area(content)
@@ -41,6 +41,20 @@ page 53100 "DW.INTGR.SetupCard"
                 field(ORDLOG_SITETOKENURL; ORDLOG_SITETOKENURL) { }
                 field(ORDLOG_USERNAME; ORDLOG_USERNAME) { }
             }
+            // << VOX1.14 PS 
+            // Streetbyte Website Integration fields
+            group(STREETBYTE)
+            {
+                field(StreetByte_Address; StreetByte_Address) { }
+                field(StreetByte_Port; StreetByte_Port) { }
+                field(StreetByte_User; StreetByte_User) { }
+                field(StreetByte_Password; StreetByte_Password) { }
+                field(StreetByte_Enabled; StreetByte_Enabled) { }
+                field(StreetByte_FilePath; StreetByte_FilePath) { }
+                FIELD(StreetByte_SSHFINGER; StreetByte_SSHFINGER) { }
+            }
+            // >> VOX1.14 PS 
+
         }
     }
     actions
@@ -118,6 +132,20 @@ page 53100 "DW.INTGR.SetupCard"
                     orderlogistics.TEST_SiteAuth();
                 end;
             }
+            // << VOX1.14 PS 
+            // StreetByte Integration Fields 
+            action(StreetByte_SendSalesReps)
+            {
+                Caption = 'StreetByte_SendSalesReps';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                    StreetByte.SendSalesReps;
+                end;
+            }
+            // >> VOX1.14 PS 
 
         }
     }
