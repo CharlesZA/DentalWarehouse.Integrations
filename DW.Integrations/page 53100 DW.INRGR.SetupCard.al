@@ -192,6 +192,19 @@ page 53100 "DW.INTGR.SetupCard"
                    StreetByte.SendGeoAreas;
                 end;
             }
+
+            action(StreetByte_ProdSubCat)
+            {
+                Caption = 'Send Product Sub Categories to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendProdSubCat;
+                end;
+            }
+
             // >> VOX1.14 PS 
 
         }

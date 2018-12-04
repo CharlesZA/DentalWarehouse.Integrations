@@ -11,8 +11,8 @@ codeunit 53103 "DW.STREETBYTE.IntegrationMgt"
         //Product Categories : SendProdCat
         //Supllier Master  : SendSupplier
         //geo areas : SendGeoAreas
-
-      //Product sub Cat
+        //Product sub Cat : SendProdSubCat
+      
       //Product Master 
       //order taken by 
       //dentsply
@@ -233,6 +233,49 @@ codeunit 53103 "DW.STREETBYTE.IntegrationMgt"
                                      '/ <root>');
 
     end;
+    procedure SendProdSubCat()
+    var
+        integrationSetup: Record "DW.INTGR.Setup";
+        SendProdSubCat: OutStream;
+        tofiletext: Text;
+        requestpagexml: Text;
+        processBlob: Record "DW.INTGR.ProcessBlob";
+        txtID: code[20];
+        sftpintegration: Codeunit "SFTP Outbound Integration";
+        ProdSubCat:XmlPort "DW.Streetbyte.GeoAreas.XML";
+
+
+    begin
+        integrationSetup.get;
+        if integrationSetup.streetbyte_ENABLED = false then exit;
+        clear(ProdSubCat);
+        tofiletext := 'product-sub-categories.txt';
+
+        txtID := 'product-sub-categories';
+        IF processBlob.Get(txtID) then processBlob.Delete(FALSE);
+        processBlob.init;
+        processBlob.PrimaryKey := txtID;
+        processBlob.Insert(false);
+
+        processBlob.CalcFields(TempBlob);
+        processBlob.TempBlob.CreateOutStream(SendProdSubCat);
+        ProdSubCat.SetDestination(SendProdSubCat);
+        ProdSubCat.Export();
+        processBlob.Modify(FALSE);
+        processBlob.ExportToServerFile(integrationSetup.StreetByte_FilePath + '\' + 'product-sub-categories'+ '.txt', true);
+
+        processBlob.get(txtID);
+        processBlob.Delete(false);
+
+        // add ftp function call here
+        sftpintegration.SFTPSENDFILE(integrationSetup.StreetByte_Address,integrationSetup.StreetByte_User,
+                                     integrationSetup.StreetByte_Password, integrationSetup.StreetByte_SSHFINGER,
+                                     integrationSetup.StreetByte_FilePath + '\' +'product-sub-categories'+ '.txt',
+                                     '/ <root>');
+
+    end;
+
+
 
 
 
