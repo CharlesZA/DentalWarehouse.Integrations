@@ -1,10 +1,10 @@
 {
   "id": "963fec75-78d2-462e-8ddc-83b0c5b2f5c6",
   "name": "DentalWarehouse Integrations",
-  "publisher": "RIVERINE TECHNOLOGY SERVICES",
+  "publisher": "Braintree by VOX",
   "brief": "Dental Warehouse Integrations for Bidvest, OrderLogistics, WooCommerce",
   "description": "Dental Warehouse Integrations for Bidvest, OrderLogistics, WooCommerce",
-  "version": "11.0.21441.0",
+  "version": "11.0.25466.0",
   "privacyStatement": "",
   "EULA": "",
   "help": "",
@@ -16,8 +16,8 @@
   "platform": "11.0.0.0",
   "application": "11.0.0.0",
   "idRange": {
-    "from": 53100,
-    "to": 53199
+  "from": 53100,
+   "to": 53199
   },
   "runtime": "2.0",
   "showMyCode": true
