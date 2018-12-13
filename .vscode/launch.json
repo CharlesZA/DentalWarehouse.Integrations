@@ -12,6 +12,7 @@
             "startupObjectId": 22,
             "schemaUpdateMode": "Recreate",
             "port": 8049
+        
         }
     ]
 }
