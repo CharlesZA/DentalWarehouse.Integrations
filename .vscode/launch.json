@@ -6,12 +6,12 @@
             "type": "al",
             "request": "launch",
             "name": "Your own server",
-            "server": "http://localhost",
+            "server": "http://localhost:8081",
             "serverInstance": "DynamicsNAV110",
             "authentication": "Windows",
             "startupObjectId": 22,
             "schemaUpdateMode": "Recreate",
-            "port": 7049
+            "port": 8049
         }
     ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "963fec75-78d2-462e-8ddc-83b0c5b2f5c6",
-  "name": "DentalWarehouse Integrations",
+  "name": "The DentalWarehouse Integrations",
   "publisher": "Braintree by VOX",
   "brief": "Dental Warehouse Integrations: Bidvest, OrderLogistics, WooCommerce,StreetByte",
   "description": "Dental Warehouse Integrations: Bidvest, OrderLogistics, WooCommerce,StreetByte",
@@ -17,7 +17,7 @@
   "application": "11.0.0.0",
   "idRange": {
   "from": 53100,
-   "to": 53199
+   "to":  53199
   },
   "runtime": "2.0",
   "showMyCode": true

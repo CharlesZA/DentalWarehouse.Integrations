@@ -45,13 +45,14 @@ page 53100 "DW.INTGR.SetupCard"
             // Streetbyte Website Integration fields
             group(STREETBYTE)
             {
-                field(StreetByte_Address; StreetByte_Address) { }
-                field(StreetByte_Port; StreetByte_Port) { }
-                field(StreetByte_User; StreetByte_User) { }
-                field(StreetByte_Password; StreetByte_Password) { }
-                field(StreetByte_Enabled; StreetByte_Enabled) { }
-                field(StreetByte_FilePath; StreetByte_FilePath) { }
-                FIELD(StreetByte_SSHFINGER; StreetByte_SSHFINGER) { }
+                field("StreetByte Enabled"; "StreetByte Enabled") { }
+                field("StreetByte Address"; "StreetByte Address") { }
+                field("StreetByte Port"; "StreetByte Port") { }
+                field("StreetByte User"; "StreetByte User") { }
+                field("StreetByte Password"; "StreetByte Password") { }
+                field("StreetByte FilePath"; "StreetByte FilePath") { }
+                FIELD("StreetByte SSHFINGER"; "StreetByte SSHFINGER") { }
+                field("StreetByte Destination"; "StreetByte Destination") { }
             }
             // >> VOX1.14 PS 
 
@@ -119,7 +120,7 @@ page 53100 "DW.INTGR.SetupCard"
                 var
                     orderlogistics: Codeunit "DW.ORDERWISE.IntegrationMgt";
                 begin
-                    orderlogistics.TEST_UserAuth();
+                   Orderlogistics.TEST_UserAuth();
                 end;
             }
             action(ORDLOG_TESTSITEAUTH)
@@ -205,6 +206,64 @@ page 53100 "DW.INTGR.SetupCard"
                 end;
             }
 
+            
+            action(StreetByte_Users)
+            {
+                Caption = 'Send Users to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendUsers;
+                end;
+            }
+
+              action(StreetByte_Locations)
+            {
+                Caption = 'Send Locations to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendLocations;
+                end;
+            }
+            
+              action(StreetByte_ProductMaster)
+            {
+                Caption = 'Send Item Master to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendItemMaster;
+                end;
+            }
+              action(StreetByte_CustomerGroups)
+            {
+                Caption = 'Send Customer Groups to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendCustomerGroups;
+                end;
+            }
+               action(StreetByte_Salesinvs)
+            {
+                Caption = 'Send Sales Invoices to StreetByte';
+                trigger OnAction()
+                var
+                    StreetByte: Codeunit "DW.streetbyte.IntegrationMgt";
+                begin
+                   clear(StreetByte);
+                   StreetByte.SendSalesinvoices;
+                end;
+            }
             // >> VOX1.14 PS 
 
         }

@@ -36,16 +36,23 @@ table 53100 "DW.INTGR.Setup"
         }
         // << VOX1.14 PS 
         // StreetByte fields
-        field(50000; StreetByte_Address; Text[150]) { }
-        field(50001; StreetByte_Port; Text[50]) { }
-        field(50002; StreetByte_User; Text[50]) { }
-        field(50003; StreetByte_Password; Text[50]) { }
-        field(50004; StreetByte_Enabled; Boolean) { }
-        field(50005; StreetByte_FilePath; TEXT[50]) { }
-        field(50006; StreetByte_SSHFINGER; TEXT[150]) { }
+        field(50000; "StreetByte Address"; Text[150]) { }
+        field(50001; "StreetByte Port"; Text[50]) { }
+        field(50002; "StreetByte User"; Text[50]) { }
+        field(50003; "StreetByte Password"; Text[50]) { }
+        field(50004; "StreetByte Enabled"; Boolean) { }
+        field(50005; "StreetByte FilePath"; TEXT[150]) { }
+        field(50006; "StreetByte SSHFINGER"; TEXT[150]) { }
+        field(50007; "StreetByte Destination"; TEXT[150]) { }
+
+        // GlobeFlight Integration
+        field(51000;"Globeflight Enabled"; Boolean) { }
+        field(51001;"Globeflight Dev Address"; Text[150]) { }
+        field(51002;"Globeflight Live Address"; Text[150]) { }
+        FIELD(51003; "Globeflight UserName"; Text[50]) { }
+        FIELD(51004; "Globeflight Password"; Text[50]) { }
+        FIELD(51005; "Globeflight Account No."; Text[50]) { }
         // >> VOX1.14 PS 
-
-
 
     }
 
@@ -92,13 +99,14 @@ table 53100 "DW.INTGR.Setup"
         // Modify(false);
         // << VOX1.14 PS 
         // StreetByte fields
-        StreetByte_Address   := 'https://dw.kusasa.biz/';
-        StreetByte_Port      := '443';
-        StreetByte_User      := 'Preshan';
-        StreetByte_Password  := 'This is a strong password';
-        StreetByte_Enabled   :=  False;
-        StreetByte_FilePath  := 'C:\Temp2';
-        StreetByte_SSHFINGER := '69:48:fc:a8:0b:54:0e:21:df:20:2c:e5:d0:d1:1d:9f:18:67:1f:9f';
+        "StreetByte Address"     := '45.32.148.185';
+        "StreetByte Port"        := '22';
+        "StreetByte User"        := 'DWUser';
+        "StreetByte Password"    := '~-Pn?a2;$u)[@L"+';
+        "StreetByte Enabled"     :=  False;
+        "StreetByte FilePath"    := 'C:\Temp2';
+        "StreetByte SSHFINGER"   := 'ssh-rsa 2048 ahmO5Yr0OjG6YzQKQVAU35c+2aEsMrdcTx4jd3CuwJs=';
+        "StreetByte Destination" := '/tmp/';
         // >> VOX1.14 PS 
     end;
 
